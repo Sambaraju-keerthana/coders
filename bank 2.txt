@@ -1,0 +1,92 @@
+package Bank;
+
+class BankAccount {
+
+    String name;
+    int balance;
+    String accountType;
+    static int totalAccounts;
+
+    // Constructor 1
+    BankAccount(String name) {
+        this.name = name;
+        this.balance = 0;
+        this.accountType = "Savings";
+        totalAccounts++;
+    }
+
+    // Constructor 2
+    BankAccount(String name, int initialDeposit) {
+        this.name = name;
+        this.balance = initialDeposit;
+        this.accountType = "Savings";
+        totalAccounts++;
+    }
+
+    // Constructor 3
+    BankAccount(String name, int initialDeposit, String accountType) {
+        this.name = name;
+        this.balance = initialDeposit;
+        this.accountType = accountType;
+        totalAccounts++;
+    }
+
+    // Withdrawal method
+    public void withdrawal(int amount) {
+        balance -= amount;
+        System.out.println("Amount withdrawn is: " + amount);
+    }
+
+    // Overloaded withdrawal method
+    public void withdrawal(int amount, String type) {
+        balance -= amount;
+        System.out.println("Amount " + amount + " is withdrawn by " + type);
+    }
+
+    // Deposit method
+    public void deposit(int amount) {
+        balance += amount;
+        System.out.println("Amount " + amount + " is deposited");
+    }
+
+    // Overloaded deposit method
+    public void deposit(int amount, String type) {
+        balance += amount;
+        System.out.println("Amount " + amount + " is deposited by " + type);
+    }
+
+    // Static method to show total accounts
+    public static void totalNoAccounts() {
+        System.out.println("Total Accounts created: " + totalAccounts);
+    }
+
+    // Display account details
+    public void displayDetails() {
+        System.out.println("----- Bank Details -----");
+        System.out.println("Name: " + this.name);
+        System.out.println("AccountType: " + this.accountType);
+        System.out.println("Balance: " + this.balance);
+    }
+}
+
+// Main class
+public class BankApplication {
+
+    public static void main(String[] args) {
+
+        BankAccount b1 = new BankAccount("keerthana");
+        BankAccount b2 = new BankAccount("keerthana", 500);
+        BankAccount b3 = new BankAccount("keerthana", 5000, "Savings");
+
+        b1.deposit(100);
+        b2.deposit(200, "cash");
+        b3.deposit(500, "cheque");
+
+        b1.withdrawal(100);
+        b2.withdrawal(200, "ATM");
+        b3.withdrawal(100, "UPI");
+
+        BankAccount.totalNoAccounts();
+        b2.displayDetails();
+    }
+}

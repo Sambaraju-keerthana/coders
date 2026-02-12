@@ -1,0 +1,93 @@
+package Calculator;
+
+import java.util.Scanner;
+
+public class cal2 {
+	
+	double num1;
+	double num2;
+	static int operations=0;
+	
+	cal2(double num1, double num2)
+	{
+		this.num1=num1;
+		this.num2=num2;
+	}
+	
+	static void display()
+	{
+		System.out.println("its a calculator");
+	}
+	
+	double calculations(char op)
+	{
+		double result=0;
+		
+		switch(op)
+		{
+		case '+':
+			result=num1+num2;
+			break;
+		case '-':
+			result=num1-num2;
+			break;
+		case '*':
+			result=num1*num2;
+			break;
+		case '/':
+			if(num2==0 )
+			{
+				System.out.println("division by zero not possible");
+			}
+			else
+			{
+				result=num1/num2;
+			}
+			break;
+		default:
+			System.out.println("invalid");
+			break;
+		}
+		operations++;
+		return result;
+	}
+	
+	public static void main(String[]args)
+	{
+		Scanner sc=new Scanner(System.in);
+		while(true)
+		{
+			cal2.display();
+			System.out.println("enter 1st number:");
+			double n1=sc.nextDouble();
+			
+			System.out.println("enter 2nd number:");
+			double n2=sc.nextDouble();
+			
+			cal2 cal=new cal2(n1,n2);
+			
+			System.out.println("select opertaion:+,-,*,/");
+			char op=sc.next().charAt(0);
+			
+			double result=cal.calculations(op);
+			 
+			System.out.println("Result:"+result);
+			System.out.println("operation count:"+operations);
+			
+			System.out.println("do want to continue(y/n)");
+			char choice=sc.next().charAt(0);
+			
+			if(choice=='n' || choice=='N')
+			{
+				break;
+			}
+			
+			
+			
+			
+		}
+		
+	}
+	
+
+}

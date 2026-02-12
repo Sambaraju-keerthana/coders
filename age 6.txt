@@ -1,0 +1,84 @@
+package invalidage;
+
+import java.util.Scanner;
+
+class InvalidAgeException extends Exception {
+    public InvalidAgeException(String message) {
+        super(message);
+    }
+}
+
+public class main {
+
+    static void validateAge(int age) throws InvalidAgeException {
+        if (age < 18) {
+            throw new InvalidAgeException("Invalid Age! Minimum age required is 18.");
+        }
+        System.out.println("Age validation successful.");
+    }
+
+    static int divideNumbers(int dividend, int divisor) {
+        if (divisor == 0) {
+            throw new ArithmeticException("Division by zero is not allowed.");
+        }
+        return dividend / divisor;
+    }
+
+   
+
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+        int choice;
+
+        do {
+            System.out.println("\n===== Exception Handling Menu =====");
+            System.out.println("1. Validate Age");
+            System.out.println("2. Divide Two Numbers");
+            System.out.println("3. Exit");
+            System.out.print("Enter your choice: ");
+            choice = sc.nextInt();
+
+            try {
+                switch (choice) {
+
+                    case 1:
+                        System.out.print("Enter your age: ");
+                        int age = sc.nextInt();
+                        validateAge(age);
+                        break;
+
+                    case 2:
+                        System.out.print("Enter dividend: ");
+                        int dividend = sc.nextInt();
+
+                        System.out.print("Enter divisor: ");
+                        int divisor = sc.nextInt();
+
+                        int result = divideNumbers(dividend, divisor);
+                        System.out.println("Division Result: " + result);
+                        break;
+
+                    case 3:
+                        System.out.println("Exiting program...");
+                        break;
+
+                    default:
+                        System.out.println("Invalid choice!");
+                }
+            } catch (InvalidAgeException e) {
+                System.out.println("Custom Exception Caught: " + e.getMessage());
+            } catch (ArithmeticException e) {
+                System.out.println("Arithmetic Exception Caught: " + e.getMessage());
+            
+            } catch (Exception e) {
+                System.out.println("Invalid input! Please enter integers only.");
+                sc.next();
+            }
+
+        } while (choice != 3);
+
+        System.out.println("Program execution completed.");
+        sc.close();
+    }
+}

@@ -1,0 +1,94 @@
+package pd;
+
+import java.util.Scanner;
+
+class Buffer {
+    private int item;
+    private boolean available = false;
+
+    public synchronized void produce(int value, int id) throws InterruptedException {
+        while (available) {
+            wait();
+        }
+        item = value;
+        available = true;
+        System.out.println("Producer #" + id + " put: " + item);
+        notifyAll();
+    }
+
+    public synchronized void consume(int id) throws InterruptedException {
+        while (!available) {
+            wait();
+        }
+        System.out.println("Consumer #" + id + " got: " + item);
+        available = false;
+        notifyAll();
+    }
+}
+
+class Producer extends Thread {
+    private Buffer buffer;
+    private int id;
+    private int max;
+
+    Producer(Buffer buffer, int id, int max) {
+        this.buffer = buffer;
+        this.id = id;
+        this.max = max;
+    }
+
+    public void run() {
+        try {
+            for (int i = 1; i <= max; i++) {
+                buffer.produce(i, id);
+                Thread.sleep(500);
+            }
+        } catch (InterruptedException e) {
+            System.out.println(e);
+        }
+    }
+}
+
+class Consumer extends Thread {
+    private Buffer buffer;
+    private int id;
+    private int max;
+
+    Consumer(Buffer buffer, int id, int max) {
+        this.buffer = buffer;
+        this.id = id;
+        this.max = max;
+    }
+
+    public void run() {
+        try {
+            for (int i = 1; i <= max; i++) {
+                buffer.consume(id);
+                Thread.sleep(500);
+            }
+        } catch (InterruptedException e) {
+            System.out.println(e);
+        }
+    }
+}
+
+public class ProducerConsumerDemo {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        
+        System.out.println("Enter Producer/Consumer ID: ");
+        int id = sc.nextInt();
+        
+        System.out.println("Enter max value to produce: ");
+        int max = sc.nextInt();
+        
+        Buffer buffer = new Buffer();
+        Producer producer = new Producer(buffer, id, max);
+        Consumer consumer = new Consumer(buffer, id, max);
+        
+        producer.start();
+        consumer.start();
+        
+        sc.close();
+    }
+}

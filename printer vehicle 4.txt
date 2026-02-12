@@ -1,0 +1,114 @@
+package printer;
+import java.util.Scanner;
+
+
+abstract class Printer {
+ abstract void configuration();
+ abstract void display();
+}
+
+
+class DotMatrix extends Printer {
+
+ void configuration() {
+     System.out.println("DotMatrix Printer Configuration:");
+     System.out.println("1. Printing Speed : Slow");
+     System.out.println("2. Print Quality  : Low");
+     System.out.println("3. Cost           : Low");
+     System.out.println("4. Noise Level    : High");
+ }
+
+ void display() {
+     System.out.println("This is a DotMatrix Printer.");
+ }
+}
+
+
+class LaserJet extends Printer {
+
+ void configuration() {
+     System.out.println("LaserJet Printer Configuration:");
+     System.out.println("1. Printing Speed : Fast");
+     System.out.println("2. Print Quality  : High");
+     System.out.println("3. Cost           : High");
+     System.out.println("4. Noise Level    : Low");
+ }
+
+ void display() {
+     System.out.println("This is a LaserJet Printer.");
+ }
+}
+
+
+public class PrinterDemo {
+
+ public static void main(String[] args) {
+
+     Scanner sc = new Scanner(System.in);
+     Printer printer;
+
+     System.out.println("Choose Printer Type:");
+     System.out.println("1. DotMatrix Printer");
+     System.out.println("2. LaserJet Printer");
+     System.out.print("Enter your choice: ");
+
+     int choice = sc.nextInt();
+
+     if (choice == 1) {
+         printer = new DotMatrix();   // Abstraction
+     } else if (choice == 2) {
+         printer = new LaserJet();    // Abstraction
+     } else {
+         System.out.println("Invalid Choice");
+         sc.close();
+         return;
+     }
+
+     System.out.println("\n--- Printer Details ---");
+     printer.display();
+     printer.configuration();
+
+     sc.close();
+ }
+}				
+    					
+
+
+
+
+
+
+package vehicle;
+
+interface vehicletest
+{
+	public void drive();
+}
+
+class car implements vehicletest
+{
+	public void drive()
+	{
+		System.out.println("car is starting");
+	}
+}
+class motorcycle implements vehicletest
+{
+	public void drive()
+	{
+		System.out.println("motorcycle is starting");
+	}
+}
+
+public class vehicle
+{
+	public static void main(String[]args)
+	{
+		vehicletest v1=new car();
+		vehicletest v2=new motorcycle();
+		v1.drive();
+		v2.drive();
+	}
+}
+    					
+    					

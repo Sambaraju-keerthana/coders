@@ -1,0 +1,116 @@
+package shape;
+
+public class Circle {
+    private double radius;
+
+    public Circle(double radius) {
+        this.radius = radius;
+    }
+
+    public double calculateArea() {
+        return 3.14 * radius * radius;
+    }
+}
+
+
+
+
+package shape;
+
+public class Triangle {
+    private double base;
+    private double height;
+
+    public Triangle(double base, double height) {
+        this.base = base;
+        this.height = height;
+    }
+
+    public double calculateArea() {
+        return 0.5 * base * height;
+    }
+}
+
+
+
+package shape;
+
+public class Triangle {
+    private double base;
+    private double height;
+
+    public Triangle(double base, double height) {
+        this.base = base;
+        this.height = height;
+    }
+
+    public double calculateArea() {
+        return 0.5 * base * height;
+    }
+}
+
+
+
+
+package MainPackage;
+
+import java.util.*;
+import shape.Circle;
+import shape.Square;
+import shape.Triangle;
+
+public class mainPrg {
+
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+        int choice;
+
+        do {
+            System.out.println("1 - Area of circle");
+            System.out.println("2 - Area of square");
+            System.out.println("3 - Area of triangle");
+            System.out.println("4 - I would like to exit");
+            System.out.println("Enter your choice");
+
+            choice = sc.nextInt();
+
+            switch (choice) {
+
+                case 1:
+                    System.out.println("Enter radius of circle : ");
+                    double r = sc.nextDouble();
+                    Circle c1 = new Circle(r);
+                    System.out.println("Area of circle is " + c1.calculateArea());
+                    break;
+
+                case 2:
+                    System.out.println("Enter side of square : ");
+                    double s = sc.nextDouble();
+                    Square s1 = new Square(s);
+                    System.out.println("Area of square is " + s1.calculateArea());
+                    break;
+
+                case 3:
+                    System.out.println("Enter base of a triangle : ");
+                    double base = sc.nextDouble();
+                    System.out.println("Enter height of a triangle : ");
+                    double height = sc.nextDouble();
+                    Triangle t1 = new Triangle(base, height);
+                    System.out.println("Area of triangle is " + t1.calculateArea());
+                    break;
+
+                case 4:
+                    System.out.println("Exited");
+                    break;
+
+                default:
+                    System.out.println("Invalid choice");
+            }
+
+        } while (choice != 4);
+
+        sc.close();
+    }
+}
+  
