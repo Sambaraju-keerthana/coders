@@ -1,85 +1,77 @@
-public class ProducerConsumerDemo { 
-    public static void main(String[] args) { 
-        Buffer buffer = new Buffer(); 
- 
-        Producer producer = new Producer(buffer); 
-        Consumer consumer1 = new Consumer(buffer, "Consumer-1"); 
-        Consumer consumer2 = new Consumer(buffer, "Consumer-2"); 
- 
-        producer.start(); 
-        consumer1.start(); 
-        consumer2.start(); 
-    } 
-} 
- 
-class Buffer { 
-    private int item; 
-    private boolean available = false; 
- 
-    // Producer method 
-    public synchronized void produce(int value) throws InterruptedException { 
-        while (available) { 
-            wait();   // wait if buffer is full 
-        } 
- 
-        item = value; 
-        available = true; 
-        System.out.println("Produced: " + item); 
- 
-        notifyAll();  // wake up ALL waiting consumers 
-    } 
- 
-    // Consumer method 
-    public synchronized void consume(String name) throws InterruptedException 
-{ 
-        while (!available) { 
-            wait();   // wait if buffer is empty 
-        } 
- 
-        System.out.println(name + " consumed: " + item); 
-        available = false; 
- 
-        notify();    // notify producer (only one needed) 
-    } 
-} 
- 
-class Producer extends Thread { 
-    private Buffer buffer; 
- 
-    Producer(Buffer buffer) { 
-        this.buffer = buffer; 
-    } 
- 
-    public void run() { 
-        try { 
-            for (int i = 1; i <= 5; i++) { 
-                buffer.produce(i); 
-                Thread.sleep(1000); 
-            } 
-        } catch (InterruptedException e) { 
-            System.out.println(e); 
-        } 
-    } 
-} 
- 
-class Consumer extends Thread { 
-    private Buffer buffer; 
-    private String name; 
- 
-    Consumer(Buffer buffer, String name) { 
-        this.buffer = buffer; 
-        this.name = name; 
-    } 
- 
-    public void run() { 
-        try { 
-            for (int i = 1; i <= 3; i++) { 
-                buffer.consume(name); 
-                Thread.sleep(1500); 
-            } 
-        } catch (InterruptedException e) { 
-            System.out.println(e); 
-        } 
-    } 
-} 
- 
+public class ProducerConsumerDemo {
+    public static void main(String[] args) {
+        Buffer buffer = new Buffer();
+
+        Producer producer = new Producer(buffer);
+        Consumer consumer = new Consumer(buffer);
+
+        producer.start();
+        consumer.start();
+    }
+}
+class Buffer {
+    private int item;
+    private boolean available = false;
+
+   
+    public synchronized void produce(int value) throws InterruptedException {
+        while (available) {
+            wait(); 
+        }
+        item = value;
+        available = true;
+        System.out.println("Produced: " + item);
+        notify(); 
+    }
+
+   
+    public synchronized void consume() throws InterruptedException {
+        while (!available) {
+            wait(); 
+        }
+        System.out.println("Consumed: " + item);
+        available = false;
+        notify(); 
+    }
+}
+
+
+class Producer extends Thread {
+    private Buffer buffer;
+
+    Producer(Buffer buffer) {
+        this.buffer = buffer;
+    }
+
+    public void run() {
+        try {
+            for (int i = 1; i <= 5; i++) {
+                buffer.produce(i);
+                Thread.sleep(1000);
+            }
+        } catch (InterruptedException e) {
+            System.out.println(e);
+        }
+    }
+}
+
+class Consumer extends Thread {
+    private Buffer buffer;
+
+    Consumer(Buffer buffer) {
+        this.buffer = buffer;
+    }
+
+    public void run() {
+        try {
+            for (int i = 1; i <= 5; i++) {
+                buffer.consume();
+                Thread.sleep(1500);
+            }
+        } catch (InterruptedException e) {
+            System.out.println(e);
+        }
+    }
+}
+
+
