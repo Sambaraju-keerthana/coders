@@ -20,7 +20,7 @@ class Buffer {
         }
         item = value;
         available = true;
-        System.out.println("Produced: " + item);
+        System.out.println("Producer #10 put: " + item);
         notify(); 
     }
 
@@ -29,7 +29,7 @@ class Buffer {
         while (!available) {
             wait(); 
         }
-        System.out.println("Consumed: " + item);
+        System.out.println("Consumer #10 got: " + item);
         available = false;
         notify(); 
     }
